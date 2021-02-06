@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
       # The url from where the 'master_config.vm.box' box will be fetched if it
       # doesn't already exist on the user's system.
       #master_config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-	  master_config.vm.box_url = https://app.vagrantup.com/hashicorp/boxes/precise64/versions/1.1.0/providers/virtualbox.box
+	  master_config.vm.box_url = "https://app.vagrantup.com/hashicorp/boxes/precise64/versions/1.1.0/providers/virtualbox.box"
       
       # If you're using VMWare Fusion rather than Virtualbox, you'll want to use this box_url instead
       # master_config.vm.box_url = "http://files.vagrantup.com/precise64_vmware_fusion.box"
