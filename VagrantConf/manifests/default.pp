@@ -2,7 +2,7 @@
 
 node default {
   
-  host { 'puppet.grahamgilbert.dev':
+  host { 'puppet.vagrantvm.dev':
     ensure       => 'present',
     host_aliases => ['puppet'],
     ip           => '192.168.33.10',
@@ -12,16 +12,16 @@ node default {
   
   package {'puppetmaster':
     ensure  =>  latest,
-    require => Host['puppet.grahamgilbert.dev'],
+    require => Host['puppet.vagrantvm.dev'],
   }
     
   # Configure puppetdb and its underlying database
   class { 'puppetdb': 
     listen_address => '0.0.0.0',
     require => Package['puppetmaster'],
-    database          => 'embedded',
-    puppetdb_version => latest,
-    }
+    database => 'embedded',
+	}
+	
   # Configure the puppet master to use puppetdb
   class { 'puppetdb::master::config': }
     
@@ -29,6 +29,14 @@ node default {
     dashboard_site    => $fqdn,
     dashboard_port    => '3000',
     require           => Package["puppetmaster"],
+	dashboard_ensure  => 'present',
+	dashboard_user    => 'puppet-dbuser',
+	dashboard_group   => 'puppet-dbgroup',
+	dashboard_password => 'changeme',
+	dashboard_db      => 'dashboard_prod',
+	dashboard_charset => 'utf8',
+	mysql_root_pw     => 'changemetoo',
+	passenger         => true,
   }
  
   ##we copy rather than symlinking as puppet will manage this

@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
   config.vm.define :master do |master_config|
-    # Supports local cache, don't wast bandwitdh
+    # Supports local cache, don't waste bandwitdh
     # vagrant plugin install vagrant-cachier
     # https://github.com/fgrehm/vagrant-cachier 
     if Vagrant.has_plugin?("vagrant-cachier")
@@ -12,14 +12,14 @@ Vagrant.configure("2") do |config|
       # All Vagrant configuration is done here. The most common configuration
       # options are documented and commented below. For a complete reference,
       # please see the online documentation at vagrantup.com.
-      master_config.vm.hostname = "puppet.grahamgilbert.dev"
-      # Every Vagrant virtual environment requires a box to build off of.
-      master_config.vm.box = "precise64"
+      master_config.vm.hostname = "puppet.vagrantvm.dev"
+      
+	  # Every Vagrant virtual environment requires a box to build off of.
+      master_config.vm.box = "generic/ubuntu2004"
     
       # The url from where the 'master_config.vm.box' box will be fetched if it
       # doesn't already exist on the user's system.
-      #master_config.vm.box_url = "http://files.vagrantup.com/precise64.box"
-	  master_config.vm.box_url = "https://app.vagrantup.com/hashicorp/boxes/precise64/versions/1.1.0/providers/virtualbox.box"
+      master_config.vm.box_url = "https://app.vagrantup.com/generic/boxes/ubuntu2004/versions/3.2.2/providers/virtualbox.box"
       
       # If you're using VMWare Fusion rather than Virtualbox, you'll want to use this box_url instead
       # master_config.vm.box_url = "http://files.vagrantup.com/precise64_vmware_fusion.box"
@@ -46,6 +46,8 @@ Vagrant.configure("2") do |config|
     master_config.vm.synced_folder "puppet/manifests", "/etc/puppet/manifests"
     master_config.vm.synced_folder "puppet/modules", "/etc/puppet/modules"
     master_config.vm.synced_folder "puppet/hieradata", "/etc/puppet/hieradata"
+	master_config.vm.synced_folder "puppet/hieradata", "/etc/puppet/hieradata"
+	master_config.vm.synced_folder "VagrantConf", "/vagrant/VagrantConf"
   end
   
   
