@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 #
-# This bootstraps Puppet on Ubuntu 12.04 LTS.
+# This bootstraps Puppet on Ubuntu 20.04 LTS (Focal Fossa).
 #
 set -e
 
-REPO_DEB_URL="http://apt.puppetlabs.com/puppetlabs-release-precise.deb"
+REPO_DEB_URL="https://apt.puppet.com/puppet7-release-focal.deb"
+export DEBIAN_FRONTEND=noninteractive
 
 #--------------------------------------------------------------------
 # NO TUNABLES BELOW THIS POINT
@@ -16,13 +17,12 @@ fi
 
 # Install the PuppetLabs repo
 echo "Configuring PuppetLabs repo..."
-repo_deb_path=$(mktemp)
-wget --output-document=${repo_deb_path} ${REPO_DEB_URL} 2>/dev/null
-dpkg -i ${repo_deb_path} >/dev/null
-apt-get update >/dev/null
+curl -O ${REPO_DEB_URL} > /dev/null 2>&1
+dpkg -i puppet7-release-focal.deb > /dev/null 2>&1
+apt-get update > /dev/null 2>&1
 
 # Install Puppet
 echo "Installing Puppet..."
-apt-get install -y puppet >/dev/null
+apt-get install -y puppetserver > /dev/null 2>&1
 
 echo "Puppet installed!"
